@@ -1,0 +1,37 @@
+plugins {
+	id 'org.springframework.boot' version '2.1.3.RELEASE'
+	id 'java'
+	id 'war'
+}
+
+apply plugin: 'io.spring.dependency-management'
+
+group = 'net.loyintea'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-aop'
+	implementation 'org.apache.commons:commons-lang3'
+	// https://mvnrepository.com/artifact/com.google.code.gson/gson
+	implementation 'com.google.code.gson:gson:2.8.5'
+	// https://mvnrepository.com/artifact/org.apache.commons/commons-jexl3
+	implementation 'org.apache.commons:commons-jexl3:3.1'
+//	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	compileOnly 'org.projectlombok:lombok'
+//	runtimeOnly 'mysql:mysql-connector-java'
+	annotationProcessor 'org.projectlombok:lombok'
+	providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
