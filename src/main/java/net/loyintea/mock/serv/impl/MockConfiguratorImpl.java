@@ -37,7 +37,7 @@ class MockConfiguratorImpl implements MockConfigurator {
         result.setClientIp(queryParam.getClientIp());
         result.setUri(queryParam.getUri());
         // 这个表达式的配置需要注意，遵守JEXL3的规定
-        result.setExpression("params.a=='[1]' && params.b=='[1,2]'");
+        result.setExpression("params.a=='[1]' && params.b=='[1, 2]'");
         result.setHttpStatusCode(200);
         result.setResponseBody("{\"code\":\"0000\"}");
         result.setSort(-1f);
@@ -62,8 +62,8 @@ class MockConfiguratorImpl implements MockConfigurator {
     /**
      * 查出配置列表，按顺序，依次匹配，找到第一条配置数据，将其转换为输出数据
      *
-     * @param input
-     * @return
+     * @param input mock的输入数据
+     * @return mock的响应数据
      */
     @Override
     public ResponseEntity<Object> config(MockInput input) {
