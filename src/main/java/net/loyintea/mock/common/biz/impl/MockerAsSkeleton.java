@@ -34,10 +34,11 @@ public class MockerAsSkeleton<I, O> implements Mocker<I, O> {
                         .orElse(null)
                 );
 
+        // @formatter:on
+
         log.info("mock服务完成。result:{}", output);
         return Optional.ofNullable(output);
     }
-    // @formatter:on
 
     private void record(I i, O o) {
         log.debug("mock服务：记录下入参和出参。input:{}, output:{}", i, o);
