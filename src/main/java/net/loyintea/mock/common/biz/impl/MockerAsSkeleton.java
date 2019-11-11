@@ -50,7 +50,7 @@ public class MockerAsSkeleton<I, O> implements Mocker<I, O> {
         return null;
     }
 
-    private O doMock(I param) {
+    protected O doMock(I param) {
         log.warn("mock服务：默认没有做任何mock，直接返回null。param:{}", param);
         return null;
     }

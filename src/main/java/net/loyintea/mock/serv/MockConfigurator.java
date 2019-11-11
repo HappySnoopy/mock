@@ -1,6 +1,6 @@
 package net.loyintea.mock.serv;
 
-import net.loyintea.mock.bean.MockInput;
+import net.loyintea.mock.http.bean.MockInput4Http;
 import org.springframework.http.ResponseEntity;
 
 /**
@@ -17,5 +17,5 @@ public interface MockConfigurator {
      * @param input
      * @return
      */
-    ResponseEntity<Object> config(MockInput input);
+    ResponseEntity<Object> config(MockInput4Http input);
 }

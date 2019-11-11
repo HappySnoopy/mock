@@ -1,4 +1,4 @@
-package net.loyintea.mock.bean;
+package net.loyintea.mock.http.bean;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -9,14 +9,9 @@ import java.util.Map;
 @Getter
 @Setter
 @ToString
-public class MockConfig implements Comparable<MockConfig>{
+public class MockHttpConfig implements Comparable<MockHttpConfig> {
 
-    public static MockConfig build4Query(MockInput input){
-        MockConfig config = new MockConfig();
-        config.setClientIp(input.getClientIp());
-        config.setUri(input.getUri());
-        return config;
-    }
+
 
 
     /**
@@ -64,7 +59,7 @@ public class MockConfig implements Comparable<MockConfig>{
     private float sort;
 
     @Override
-    public int compareTo(MockConfig o) {
+    public int compareTo(MockHttpConfig o) {
         if(o == null){
             return 0;
         }else{

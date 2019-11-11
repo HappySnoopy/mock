@@ -1,7 +1,7 @@
 package net.loyintea.mock.biz.impl;
 
-import net.loyintea.mock.bean.MockInput;
 import net.loyintea.mock.biz.MockBiz;
+import net.loyintea.mock.http.bean.MockInput4Http;
 import net.loyintea.mock.serv.MockConfigurator;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -27,7 +27,7 @@ class MockBizDispatcherImpl implements MockBiz {
      * @return 返回结果
      */
     @Override
-    public ResponseEntity<Object> mock(MockInput input) {
+    public ResponseEntity<Object> mock(MockInput4Http input) {
 
         // 看看是在这里来根据input中的content-type做分发处理，还是在configurator中做分发
         ResponseEntity<Object> result = configurator.config(input);

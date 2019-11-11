@@ -1,6 +1,6 @@
 package net.loyintea.mock.biz;
 
-import net.loyintea.mock.bean.MockInput;
+import net.loyintea.mock.http.bean.MockInput4Http;
 import org.springframework.http.ResponseEntity;
 
 /**
@@ -14,5 +14,5 @@ public interface MockBiz {
      * @param input 请求数据
      * @return 响应结果
      */
-    ResponseEntity<Object> mock(MockInput input);
+    ResponseEntity<Object> mock(MockInput4Http input);
 }

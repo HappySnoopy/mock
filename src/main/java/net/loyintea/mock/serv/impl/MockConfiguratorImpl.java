@@ -1,8 +1,8 @@
 package net.loyintea.mock.serv.impl;
 
 import lombok.extern.slf4j.Slf4j;
-import net.loyintea.mock.bean.MockConfig;
-import net.loyintea.mock.bean.MockInput;
+import net.loyintea.mock.http.bean.MockHttpConfig;
+import net.loyintea.mock.http.bean.MockInput4Http;
 import net.loyintea.mock.serv.MockConfigurator;
 import org.apache.commons.jexl3.JexlEngine;
 import org.apache.commons.jexl3.JexlExpression;
@@ -16,6 +16,8 @@ import org.springframework.util.CollectionUtils;
 import java.util.ArrayList;
 import java.util.List;
 
+import static net.loyintea.mock.http.utils.HttpMockUtils.build4Query;
+
 @Service
 @Slf4j
 class MockConfiguratorImpl implements MockConfigurator {
@@ -27,13 +29,13 @@ class MockConfiguratorImpl implements MockConfigurator {
      * @param queryParam
      * @return
      */
-    private List<MockConfig> queryConfigList(MockConfig queryParam) {
+    private List<MockHttpConfig> queryConfigList(MockHttpConfig queryParam) {
 
         // 注意顺序
-        List<MockConfig> configList = new ArrayList<>();
-        MockConfig result;
+        List<MockHttpConfig> configList = new ArrayList<>();
+        MockHttpConfig result;
 
-        result = new MockConfig();
+        result = new MockHttpConfig();
         result.setClientIp(queryParam.getClientIp());
         result.setUri(queryParam.getUri());
         // 这个表达式的配置需要注意，遵守JEXL3的规定
@@ -43,7 +45,7 @@ class MockConfiguratorImpl implements MockConfigurator {
         result.setSort(-1f);
         configList.add(result);
 
-        result = new MockConfig();
+        result = new MockHttpConfig();
         result.setClientIp(queryParam.getClientIp());
         result.setUri(queryParam.getUri());
         result.setExpression("params.a=='[1]'");
@@ -66,19 +68,19 @@ class MockConfiguratorImpl implements MockConfigurator {
      * @return mock的响应数据
      */
     @Override
-    public ResponseEntity<Object> config(MockInput input) {
+    public ResponseEntity<Object> config(MockInput4Http input) {
 
-        List<MockConfig> mockConfigs = this.queryConfigList(MockConfig.build4Query(input));
+        List<MockHttpConfig> mockHttpConfigs = this.queryConfigList(build4Query(input));
 
-        MockConfig mockConfig = mockConfigs.stream().sorted()
+        MockHttpConfig mockHttpConfig = mockHttpConfigs.stream().sorted()
                 .filter(config -> isThisConfig(input, config)).findFirst()
                 .orElseThrow(() -> new RuntimeException("无法匹配到合适的mock配置"));
 
         // 这里后续需要扩展：根据mockConfig中的Content-type来生成不同的ResponseEntity和body
         // 考虑把headers放进来
-        ResponseEntity<Object> result = new ResponseEntity<>(mockConfig.getResponseBody(),
+        ResponseEntity<Object> result = new ResponseEntity<>(mockHttpConfig.getResponseBody(),
                 HttpStatus.resolve(
-                        mockConfig.getHttpStatusCode()));
+                        mockHttpConfig.getHttpStatusCode()));
 
         return result;
     }
@@ -86,7 +88,7 @@ class MockConfiguratorImpl implements MockConfigurator {
     /**
      * 这个方法可以优化下，有些东西可以简化。可以通过测试类来测试
      */
-    boolean isThisConfig(MockInput input, MockConfig config) {
+    boolean isThisConfig(MockInput4Http input, MockHttpConfig config) {
         log.info("input:{}, config:{}", input, config);
         JexlEngine engine = new Engine();
         JexlExpression expression = engine.createExpression(config.getExpression());
