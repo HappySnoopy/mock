@@ -1,6 +1,6 @@
 package net.loyintea.mock.http.service;
 
-import net.loyintea.mock.http.bean.MockHttpConfig;
+import net.loyintea.mock.http.bean.HttpMockConfig;
 
 import java.util.List;
 
@@ -14,5 +14,5 @@ public interface HttpMockService {
      *
      * @return 全套的http mock配置。有序。非null
      */
-    List<MockHttpConfig> queryConfigList();
+    List<HttpMockConfig> queryConfigList();
 }

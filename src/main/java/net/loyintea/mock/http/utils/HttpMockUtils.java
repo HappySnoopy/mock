@@ -2,8 +2,8 @@ package net.loyintea.mock.http.utils;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import net.loyintea.mock.http.bean.MockHttpConfig;
 import net.loyintea.mock.http.bean.MockInput4Http;
+import org.springframework.http.HttpMethod;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
@@ -26,6 +26,9 @@ public class HttpMockUtils {
         input.setClientIp(request.getRemoteAddr());
         input.setUri(request.getRequestURI());
 
+
+        input.setMethod(HttpMethod.resolve(request.getMethod()));
+
         Enumeration<String> parameterNames = request.getParameterNames();
         Map<String, String> params = new HashMap<>();
         while (parameterNames.hasMoreElements()) {
@@ -44,13 +47,6 @@ public class HttpMockUtils {
 
         input.setHttpRequest(request);
         return input;
-    }
-
-    public static MockHttpConfig build4Query(MockInput4Http input) {
-        MockHttpConfig config = new MockHttpConfig();
-        config.setClientIp(input.getClientIp());
-        config.setUri(input.getUri());
-        return config;
     }
 
 }

@@ -32,16 +32,16 @@ public class JexlUtils {
     public static boolean isMatched(String expression, Object param) {
         JexlExpression jexlExpression = JEXL_ENGINE.createExpression(expression);
 
-        JexlContext context;
+        JexlContext jexlContext;
         if (param instanceof Map) {
-            context = new MapContext((Map<String, Object>) param);
+            jexlContext = new MapContext((Map<String, Object>) param);
         } else {
-            context = new ObjectContext<>(JEXL_ENGINE, param);
+            jexlContext = new ObjectContext<>(JEXL_ENGINE, param);
         }
 
-        Object result = jexlExpression.evaluate(context);
+        Object result = jexlExpression.evaluate(jexlContext);
 
-        log.info("exprsion:{}, param:{}, jexlExpresion:{}, jexlContext:{}, result:{}", expression, param, jexlExpression, context, result);
+        log.info("exprsion:{}, param:{}, jexlExpresion:{}, jexlContext:{}, result:{}", expression, param, jexlExpression, jexlContext, result);
 
 
         return (boolean) result;

@@ -4,7 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import net.loyintea.mock.common.biz.impl.MockerAsSkeleton;
 import net.loyintea.mock.common.util.JexlUtils;
 import net.loyintea.mock.common.util.JsonUtils;
-import net.loyintea.mock.http.bean.MockHttpConfig;
+import net.loyintea.mock.http.bean.HttpMockConfig;
 import net.loyintea.mock.http.bean.MockInput4Http;
 import net.loyintea.mock.http.service.HttpMockService;
 import org.apache.commons.lang3.ObjectUtils;
@@ -55,11 +55,16 @@ class HttpMockerImpl extends MockerAsSkeleton<MockInput4Http, ResponseEntity<Obj
      * @param param  http请求
      * @return 本次http请求是否符合指定config的配置。符合，则返回true；否则返回false
      */
-    private boolean isConfigMatched(MockHttpConfig config, MockInput4Http param) {
+    private boolean isConfigMatched(HttpMockConfig config, MockInput4Http param) {
         // 首先，uri和method要相同
         // 其次，检查表达式是否匹配
-        return StringUtils.equals(config.getUri(), param.getUri())
+
+        boolean isMatched = StringUtils.equals(config.getUri(), param.getUri())
                 && config.getMethod() == param.getMethod() && JexlUtils.isMatched(config.getExpression(), param);
+
+        log.info("config:{}, param:{}, isMatched:{}", config, param, isMatched);
+
+        return isMatched;
     }
 
     /**
@@ -68,10 +73,13 @@ class HttpMockerImpl extends MockerAsSkeleton<MockInput4Http, ResponseEntity<Obj
      * @param config http请求/响应的配置
      * @return 将配置数据转换为响应结果
      */
-    private ResponseEntity<Object> toResponse(MockHttpConfig config) {
+    private ResponseEntity<Object> toResponse(HttpMockConfig config) {
         // 这里后续需要扩展：根据mockConfig中的Content-type来生成不同的ResponseEntity和body
         // 考虑把headers放进来
-        return new ResponseEntity<>(JsonUtils.fromJson(config.getResponseBody()),
+
+        log.info("body:{}", JsonUtils.fromJson(config.getResponseBody(), Object.class));
+
+        return new ResponseEntity<>(JsonUtils.fromJson(config.getResponseBody(), Object.class),
                 ObjectUtils.defaultIfNull(HttpStatus.resolve(
                         config.getHttpStatusCode()), HttpStatus.INTERNAL_SERVER_ERROR));
     }

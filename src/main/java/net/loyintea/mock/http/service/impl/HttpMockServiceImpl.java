@@ -1,46 +1,73 @@
 package net.loyintea.mock.http.service.impl;
 
-import net.loyintea.mock.http.bean.MockHttpConfig;
+import com.google.gson.reflect.TypeToken;
+import lombok.extern.slf4j.Slf4j;
+import net.loyintea.mock.common.util.JsonUtils;
+import net.loyintea.mock.http.bean.HttpMockConfig;
 import net.loyintea.mock.http.service.HttpMockService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
-import java.util.ArrayList;
+import java.io.File;
+import java.lang.reflect.Type;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Stream;
 
+/**
+ * Http Mock的配置服务
+ */
 @Service("httpMockService")
-public class HttpMockServiceImpl implements HttpMockService {
+@Slf4j
+class HttpMockServiceImpl implements HttpMockService {
+
+    /**
+     * 配置列表的类型（带泛型）
+     */
+    private static final Type CONFIG_LIST_TYPE = new TypeToken<List<HttpMockConfig>>() {
+    }.getType();
+
+    /**
+     * 配置文件的路径
+     */
+    @Value("${mock.http.config.location}")
+    private String location;
+
+    /**
+     * 遍历{@link #location}下所有的文件和文件夹，把里面的配置解析出来，放到一个大list里
+     * <p>
+     * TODO 放到缓存或者内存里。
+     *
+     * @return 返回配置文件列表
+     */
     @Override
-    public List<MockHttpConfig> queryConfigList() {
+    public List<HttpMockConfig> queryConfigList() {
         // 注意顺序
-        List<MockHttpConfig> configList = new ArrayList<>();
-        MockHttpConfig result;
+        List<HttpMockConfig> configList = new LinkedList<>();
 
-        result = new
-                MockHttpConfig();
-        result.setClientIp("localhost");
-        result.setUri("/test");
-        // 这个表达式的配置需要注意，遵守JEXL3的规定
-        result.setExpression("params.a=='[1]' && params.b=='[1, 2]'");
-        result.setHttpStatusCode(200);
-        result.setResponseBody("{\"code\":\"0000\"}");
-        result.setSort(-1f);
-        configList.add(result);
+        // TODO 考虑classpath的问题
+        File start = new File(location);
 
-        result = new
-                MockHttpConfig();
-        result.setClientIp("localhost");
-        result.setUri("/test");
-        result.setExpression("params.a=='[1]'");
-        result.setHttpStatusCode(500);
-        result.setResponseBody("{\"code\":\"1001\",\"message\":\"错误信息\"}");
-        result.setSort(0f);
-        configList.add(result);
+        parseConfig(start, configList);
 
 
         if (CollectionUtils.isEmpty(configList)) {
-            throw new RuntimeException("Mock没有配置！");
+            throw new RuntimeException(location + " 路径下没有HttpMock的¬配置！");
         }
         return configList;
+    }
+
+    private void parseConfig(File file, List<HttpMockConfig> configList) {
+
+        if (file.isDirectory() && file.listFiles() != null) {
+            // 如果是文件夹，且文件夹非空，则迭代文件夹内容
+            Stream.of(file.listFiles()).filter(Objects::nonNull).forEach(f -> parseConfig(f, configList));
+        } else if (file.isFile()) {
+            // 如果是文件，则解析文件内容
+            configList.addAll(JsonUtils.fromFile(file, CONFIG_LIST_TYPE));
+        }
+        // 如果不满足以上条件（如文件不存在、空文件夹），则之额吉返回不做处理
     }
 }

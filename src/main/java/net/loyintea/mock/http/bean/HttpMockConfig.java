@@ -10,10 +10,7 @@ import java.util.Map;
 @Getter
 @Setter
 @ToString
-public class MockHttpConfig implements Comparable<MockHttpConfig> {
-
-
-
+public class HttpMockConfig implements Comparable<HttpMockConfig> {
 
     /**
      * 调用者的IP
@@ -65,7 +62,7 @@ public class MockHttpConfig implements Comparable<MockHttpConfig> {
     private float sort;
 
     @Override
-    public int compareTo(MockHttpConfig o) {
+    public int compareTo(HttpMockConfig o) {
         if(o == null){
             return 0;
         }else{
