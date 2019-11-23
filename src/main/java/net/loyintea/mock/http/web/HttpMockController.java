@@ -4,7 +4,6 @@ import lombok.extern.slf4j.Slf4j;
 import net.loyintea.mock.common.biz.Mocker;
 import net.loyintea.mock.http.bean.MockInput4Http;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -27,23 +26,19 @@ public class HttpMockController {
     /**
      * mock处理器
      */
-    @Resource(name = "httpMocker")
+    @Resource(name = "httpMockerImpl")
     private Mocker<MockInput4Http, ResponseEntity<Object>> mocker;
 
     /**
      * 从request中把数据解析出来，交给biz去处理并生成一个响应结果
      * <p>
+     * 不配置任何映射，意为处理所有请求、方法、参数等
      *
-     * @param request
-     * @return
+     * @param request 原始http请求
+     * @return http响应结果
      */
-    @GetMapping
+    @RequestMapping
     public ResponseEntity<Object> mock(HttpServletRequest request) {
-        return doMock(request);
-    }
-
-    private ResponseEntity<Object> doMock(HttpServletRequest request) {
-
         // 上传、下载、responseBody等，通过扩展这个工厂方法、并生成不同的MockInput来处理
         MockInput4Http input = parse(request);
         log.info("input:{}", input);

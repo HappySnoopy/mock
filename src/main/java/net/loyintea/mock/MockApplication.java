@@ -2,6 +2,8 @@ package net.loyintea.mock;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 
 /**
  * 提供http的mock挡板
@@ -11,10 +13,18 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * 否则……可能会访问不到。除非配置Nginx、网关等加上项目路径才行。
  */
 @SpringBootApplication
-public class MockApplication {
+public class MockApplication extends SpringBootServletInitializer {
 
 	public static void main(String[] args) {
 		SpringApplication.run(MockApplication.class, args);
 	}
+
+
+    @Override
+    protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+        return application.sources(MockApplication.class);
+    }
+
+
 
 }

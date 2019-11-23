@@ -1,4 +1,4 @@
-package net.loyintea.mock.util;
+package net.loyintea.mock.common.util;
 
 import com.google.gson.Gson;
 
@@ -8,5 +8,9 @@ public class JsonUtils {
 
     public static String toJson(Object object){
         return GSON.toJson(object);
+    }
+
+    public static Object fromJson(String json) {
+        return GSON.fromJson(json, Object.class);
     }
 }

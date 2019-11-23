@@ -2,6 +2,7 @@ package net.loyintea.mock.http.bean;
 
 import lombok.Data;
 import lombok.ToString;
+import org.springframework.http.HttpMethod;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
@@ -22,6 +23,11 @@ public class MockInput4Http {
      * 请求的uri
      */
     private String uri;
+
+    /**
+     * HTTP请求方法
+     */
+    private HttpMethod method;
 
     /**
      * 请求的参数

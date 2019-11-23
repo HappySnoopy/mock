@@ -3,6 +3,7 @@ package net.loyintea.mock.http.bean;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.http.HttpMethod;
 
 import java.util.Map;
 
@@ -24,6 +25,11 @@ public class MockHttpConfig implements Comparable<MockHttpConfig> {
      * 请求的uri
      */
     private String uri;
+
+    /**
+     * HTTP请求方法
+     */
+    private HttpMethod method;
 
     /**
      * 表达式
