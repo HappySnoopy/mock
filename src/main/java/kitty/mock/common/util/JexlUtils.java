@@ -1,4 +1,4 @@
-package net.loyintea.mock.common.util;
+package kitty.mock.common.util;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;

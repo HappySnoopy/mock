@@ -1,12 +1,12 @@
-package net.loyintea.mock.http.biz.impl;
+package kitty.mock.http.biz.impl;
 
 import lombok.extern.slf4j.Slf4j;
-import net.loyintea.mock.common.biz.impl.MockerAsSkeleton;
-import net.loyintea.mock.common.util.JexlUtils;
-import net.loyintea.mock.common.util.JsonUtils;
-import net.loyintea.mock.http.bean.HttpMockConfig;
-import net.loyintea.mock.http.bean.MockInput4Http;
-import net.loyintea.mock.http.service.HttpMockService;
+import kitty.mock.common.biz.impl.MockerAsSkeleton;
+import kitty.mock.common.util.JexlUtils;
+import kitty.mock.common.util.JsonUtils;
+import kitty.mock.http.bean.HttpMockConfig;
+import kitty.mock.http.bean.MockInput4Http;
+import kitty.mock.http.service.HttpMockService;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpStatus;

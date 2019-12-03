@@ -1,7 +1,7 @@
-package net.loyintea.mock.common.biz.impl;
+package kitty.mock.common.biz.impl;
 
+import kitty.mock.common.biz.Mocker;
 import lombok.extern.slf4j.Slf4j;
-import net.loyintea.mock.common.biz.Mocker;
 
 import java.util.Optional;
 

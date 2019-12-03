@@ -1,4 +1,4 @@
-package net.loyintea.mock.common.biz;
+package kitty.mock.common.biz;
 
 import java.util.Optional;
 

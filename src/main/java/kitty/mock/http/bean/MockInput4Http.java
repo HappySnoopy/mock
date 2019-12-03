@@ -1,4 +1,4 @@
-package net.loyintea.mock.http.bean;
+package kitty.mock.http.bean;
 
 import lombok.Data;
 import lombok.ToString;

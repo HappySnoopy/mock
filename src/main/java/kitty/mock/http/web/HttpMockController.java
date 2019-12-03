@@ -1,8 +1,8 @@
-package net.loyintea.mock.http.web;
+package kitty.mock.http.web;
 
 import lombok.extern.slf4j.Slf4j;
-import net.loyintea.mock.common.biz.Mocker;
-import net.loyintea.mock.http.bean.MockInput4Http;
+import kitty.mock.common.biz.Mocker;
+import kitty.mock.http.bean.MockInput4Http;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -11,7 +11,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Optional;
 
-import static net.loyintea.mock.http.utils.HttpMockUtils.parse;
+import static kitty.mock.http.utils.HttpMockUtils.parse;
 
 /**
  * 入口

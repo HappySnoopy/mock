@@ -1,8 +1,8 @@
-package net.loyintea.mock.http.utils;
+package kitty.mock.http.utils;
 
+import kitty.mock.http.bean.MockInput4Http;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import net.loyintea.mock.http.bean.MockInput4Http;
 import org.springframework.http.HttpMethod;
 
 import javax.servlet.http.HttpServletRequest;

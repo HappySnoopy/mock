@@ -1,10 +1,10 @@
-package net.loyintea.mock.http.service.impl;
+package kitty.mock.http.service.impl;
 
 import com.google.gson.reflect.TypeToken;
+import kitty.mock.http.bean.HttpMockConfig;
+import kitty.mock.http.service.HttpMockService;
 import lombok.extern.slf4j.Slf4j;
-import net.loyintea.mock.common.util.JsonUtils;
-import net.loyintea.mock.http.bean.HttpMockConfig;
-import net.loyintea.mock.http.service.HttpMockService;
+import kitty.mock.common.util.JsonUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;

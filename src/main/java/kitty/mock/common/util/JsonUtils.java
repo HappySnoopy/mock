@@ -1,4 +1,4 @@
-package net.loyintea.mock.common.util;
+package kitty.mock.common.util;
 
 import com.google.gson.Gson;
 import lombok.AccessLevel;

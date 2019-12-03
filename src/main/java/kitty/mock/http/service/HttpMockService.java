@@ -1,6 +1,6 @@
-package net.loyintea.mock.http.service;
+package kitty.mock.http.service;
 
-import net.loyintea.mock.http.bean.HttpMockConfig;
+import kitty.mock.http.bean.HttpMockConfig;
 
 import java.util.List;
 

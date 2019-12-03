@@ -1,7 +1,8 @@
 package net.loyintea.mock.common.util;
 
 import com.google.gson.reflect.TypeToken;
-import net.loyintea.mock.http.bean.HttpMockConfig;
+import kitty.mock.common.util.JsonUtils;
+import kitty.mock.http.bean.HttpMockConfig;
 import org.junit.Test;
 
 import java.io.File;
