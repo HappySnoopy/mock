@@ -3,7 +3,6 @@ server:
   servlet:
     context-path: "/"
   port: 1986
-
 mock:
   http:
     config:
