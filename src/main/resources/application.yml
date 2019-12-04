@@ -7,4 +7,4 @@ server:
 mock:
   http:
     config:
-      location: "/Users/linjun/git/mock/src/main/resources/HttpMockConfig.json"
+      location: "somewhere/src/main/resources/HttpMockConfig.json"
