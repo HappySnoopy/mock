@@ -1,19 +1,24 @@
 package kitty.mock.http.service.impl;
 
 import com.google.gson.reflect.TypeToken;
+import kitty.mock.common.util.JexlUtils;
+import kitty.mock.common.util.JsonUtils;
 import kitty.mock.http.bean.HttpMockConfig;
+import kitty.mock.http.bean.MockInput4Http;
 import kitty.mock.http.service.HttpMockService;
 import lombok.extern.slf4j.Slf4j;
-import kitty.mock.common.util.JsonUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
+import javax.annotation.PostConstruct;
 import java.io.File;
 import java.lang.reflect.Type;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 /**
@@ -22,6 +27,13 @@ import java.util.stream.Stream;
 @Service("httpMockService")
 @Slf4j
 class HttpMockServiceImpl implements HttpMockService {
+
+    /**
+     * 参数配置列表
+     * <p>
+     * 暂存在jvm内存中
+     */
+    private List<HttpMockConfig> configList;
 
     /**
      * 配置列表的类型（带泛型）
@@ -42,8 +54,8 @@ class HttpMockServiceImpl implements HttpMockService {
      *
      * @return 返回配置文件列表
      */
-    @Override
-    public List<HttpMockConfig> queryConfigList() {
+    @PostConstruct
+    public void initConfigList() {
         // 注意顺序
         List<HttpMockConfig> configList = new LinkedList<>();
 
@@ -56,9 +68,46 @@ class HttpMockServiceImpl implements HttpMockService {
         if (CollectionUtils.isEmpty(configList)) {
             throw new RuntimeException(location + " 路径下没有HttpMock的¬配置！");
         }
-        return configList;
+        this.configList = configList;
     }
 
+    /**
+     * 查找配置列表中是否有与入参匹配的配置项
+     *
+     * @param param the param
+     * @return the http mock config
+     */
+    @Override
+    public Optional<HttpMockConfig> queryConfig(MockInput4Http param) {
+        return configList.stream().filter(config -> isConfigMatched(config, param)).findFirst();
+    }
+
+
+    /**
+     * 判断当前请求是否能匹配对应的配置项
+     *
+     * @param config http请求/响应的配置
+     * @param param  http请求
+     * @return 本次http请求是否符合指定config的配置。符合，则返回true；否则返回false
+     */
+    private boolean isConfigMatched(HttpMockConfig config, MockInput4Http param) {
+        // 首先，uri和method要相同
+        // 其次，检查表达式是否匹配
+
+        boolean isMatched = StringUtils.equals(config.getUri(), param.getUri()) && config.getMethod() == param
+                .getMethod() && JexlUtils.isMatched(config.getExpression(), param);
+
+        log.info("config:{}, param:{}, isMatched:{}", config, param, isMatched);
+
+        return isMatched;
+    }
+
+    /**
+     * Parse config.
+     *
+     * @param file       the file
+     * @param configList the config list
+     */
     private void parseConfig(File file, List<HttpMockConfig> configList) {
 
         if (file.isDirectory() && file.listFiles() != null) {

@@ -1,14 +1,12 @@
 package kitty.mock.http.biz.impl;
 
-import lombok.extern.slf4j.Slf4j;
 import kitty.mock.common.biz.impl.MockerAsSkeleton;
-import kitty.mock.common.util.JexlUtils;
 import kitty.mock.common.util.JsonUtils;
 import kitty.mock.http.bean.HttpMockConfig;
 import kitty.mock.http.bean.MockInput4Http;
 import kitty.mock.http.service.HttpMockService;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ObjectUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -38,33 +36,12 @@ class HttpMockerImpl extends MockerAsSkeleton<MockInput4Http, ResponseEntity<Obj
     protected ResponseEntity<Object> doMock(MockInput4Http param) {
         log.info("Http mock. param:{}", param);
 
-        /* 先获取完整的一套Mock配置(List)
-         然后再从中匹配第一个配置。只取第一个
-         把第一个配置转换为ResponseEntity。*/
-        ResponseEntity<Object> result = httpMockService.queryConfigList().stream().filter(config -> isConfigMatched(config, param))
-                .findFirst().map(this::toResponse).orElse(ResponseEntity.unprocessableEntity().build());
+        // TODO 如果没有mock配置，需要走转发、记录的逻辑。这个可以后续处理。
+        ResponseEntity<Object> result = httpMockService.queryConfig(param).map(this::toResponse)
+                .orElse(ResponseEntity.unprocessableEntity().build());
 
         log.info("Http mock. result:{}", result);
         return result;
-    }
-
-    /**
-     * 判断当前请求是否能匹配对应的配置项
-     *
-     * @param config http请求/响应的配置
-     * @param param  http请求
-     * @return 本次http请求是否符合指定config的配置。符合，则返回true；否则返回false
-     */
-    private boolean isConfigMatched(HttpMockConfig config, MockInput4Http param) {
-        // 首先，uri和method要相同
-        // 其次，检查表达式是否匹配
-
-        boolean isMatched = StringUtils.equals(config.getUri(), param.getUri())
-                && config.getMethod() == param.getMethod() && JexlUtils.isMatched(config.getExpression(), param);
-
-        log.info("config:{}, param:{}, isMatched:{}", config, param, isMatched);
-
-        return isMatched;
     }
 
     /**

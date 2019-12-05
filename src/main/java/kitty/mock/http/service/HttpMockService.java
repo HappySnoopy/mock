@@ -1,18 +1,22 @@
 package kitty.mock.http.service;
 
 import kitty.mock.http.bean.HttpMockConfig;
+import kitty.mock.http.bean.MockInput4Http;
 
-import java.util.List;
+import java.util.Optional;
 
 /**
- * TODO 需要调整这个接口
+ * DONE 需要调整这个接口
  */
 public interface HttpMockService {
 
     /**
-     * 获取mock配置
+     * 根据http的mock参数，找到对应的配置
      *
-     * @return 全套的http mock配置。有序。非null
+     * 后续可以改用SQL来处理
+     *
+     * @param param 入参
+     * @return 与入参匹配的配置。有可能匹配不上，匹配不上时返回EMPTY
      */
-    List<HttpMockConfig> queryConfigList();
+    Optional<HttpMockConfig> queryConfig(MockInput4Http param);
 }
