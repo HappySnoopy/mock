@@ -4,11 +4,11 @@ import com.google.gson.reflect.TypeToken;
 import kitty.mock.common.util.JexlUtils;
 import kitty.mock.common.util.JsonUtils;
 import kitty.mock.http.bean.HttpMockConfig;
-import kitty.mock.http.bean.MockInput4Http;
 import kitty.mock.http.service.HttpMockService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.RequestEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
@@ -27,7 +27,6 @@ import java.util.stream.Stream;
 @Service("httpMockService")
 @Slf4j
 class HttpMockServiceImpl implements HttpMockService {
-
     /**
      * 参数配置列表
      * <p>
@@ -50,7 +49,7 @@ class HttpMockServiceImpl implements HttpMockService {
     /**
      * 遍历{@link #location}下所有的文件和文件夹，把里面的配置解析出来，放到一个大list里
      * <p>
-     * TODO 放到缓存或者内存里。
+     * DONE 放到缓存或者内存里。
      *
      * @return 返回配置文件列表
      */
@@ -66,7 +65,7 @@ class HttpMockServiceImpl implements HttpMockService {
 
 
         if (CollectionUtils.isEmpty(configList)) {
-            throw new RuntimeException(location + " 路径下没有HttpMock的¬配置！");
+            throw new RuntimeException(location + " 路径下没有HttpMock的配置！");
         }
         this.configList = configList;
     }
@@ -78,7 +77,7 @@ class HttpMockServiceImpl implements HttpMockService {
      * @return the http mock config
      */
     @Override
-    public Optional<HttpMockConfig> queryConfig(MockInput4Http param) {
+    public Optional<HttpMockConfig> queryConfig(RequestEntity<Object> param) {
         return configList.stream().filter(config -> isConfigMatched(config, param)).findFirst();
     }
 
@@ -90,11 +89,11 @@ class HttpMockServiceImpl implements HttpMockService {
      * @param param  http请求
      * @return 本次http请求是否符合指定config的配置。符合，则返回true；否则返回false
      */
-    private boolean isConfigMatched(HttpMockConfig config, MockInput4Http param) {
+    private boolean isConfigMatched(HttpMockConfig config, RequestEntity<Object> param) {
         // 首先，uri和method要相同
         // 其次，检查表达式是否匹配
 
-        boolean isMatched = StringUtils.equals(config.getUri(), param.getUri()) && config.getMethod() == param
+        boolean isMatched = StringUtils.equals(config.getUri(), param.getUrl().getPath()) && config.getMethod() == param
                 .getMethod() && JexlUtils.isMatched(config.getExpression(), param);
 
         log.info("config:{}, param:{}, isMatched:{}", config, param, isMatched);

@@ -1,12 +1,13 @@
 package kitty.mock.http.service;
 
 import kitty.mock.http.bean.HttpMockConfig;
-import kitty.mock.http.bean.MockInput4Http;
+import org.springframework.http.RequestEntity;
 
 import java.util.Optional;
 
 /**
  * DONE 需要调整这个接口
+ * @author Snow White
  */
 public interface HttpMockService {
 
@@ -18,5 +19,5 @@ public interface HttpMockService {
      * @param param 入参
      * @return 与入参匹配的配置。有可能匹配不上，匹配不上时返回EMPTY
      */
-    Optional<HttpMockConfig> queryConfig(MockInput4Http param);
+    Optional<HttpMockConfig> queryConfig(RequestEntity<Object> param);
 }
