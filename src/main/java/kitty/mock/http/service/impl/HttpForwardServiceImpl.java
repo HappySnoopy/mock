@@ -28,9 +28,8 @@ class HttpForwardServiceImpl implements HttpForwardService {
     public Optional<HttpForwardConfig> queryConfig(RequestEntity<Object> param) {
         // test TODO
         HttpForwardConfig config = new HttpForwardConfig();
-        config.setForwardUrl("http://localhost:8081/");
+        config.setForwardUrl("http://localhost:1986/test/");
         config.setHttpMethod(HttpMethod.POST);
-
 
         log.info("param:{}, config:{}", param, config);
         return Optional.of(config);

@@ -23,6 +23,8 @@ import java.util.stream.Stream;
 
 /**
  * Http Mock的配置服务
+ *
+ * 改用RequestEntity之后，这里的处理也需要修改
  */
 @Service("httpMockService")
 @Slf4j
@@ -56,47 +58,47 @@ class HttpMockServiceImpl implements HttpMockService {
     @PostConstruct
     public void initConfigList() {
         // 注意顺序
-        List<HttpMockConfig> configList = new LinkedList<>();
+        List<HttpMockConfig> tempConfigList = new LinkedList<>();
 
         // TODO 考虑classpath的问题
         File start = new File(location);
 
-        parseConfig(start, configList);
+        parseConfig(start, tempConfigList);
 
 
-        if (CollectionUtils.isEmpty(configList)) {
+        if (CollectionUtils.isEmpty(tempConfigList)) {
             throw new RuntimeException(location + " 路径下没有HttpMock的配置！");
         }
-        this.configList = configList;
+        this.configList = tempConfigList;
     }
 
     /**
      * 查找配置列表中是否有与入参匹配的配置项
      *
-     * @param param the param
-     * @return the http mock config
+     * @param req 用户发起的http请求
+     * @return 与req相匹配的mock配置
      */
     @Override
-    public Optional<HttpMockConfig> queryConfig(RequestEntity<Object> param) {
-        return configList.stream().filter(config -> isConfigMatched(config, param)).findFirst();
+    public Optional<HttpMockConfig> queryConfig(RequestEntity<Object> req) {
+        return configList.stream().filter(config -> isConfigMatched(config, req)).findFirst();
     }
-
 
     /**
      * 判断当前请求是否能匹配对应的配置项
      *
+     * TODO requestEntity中的QueryString格式有点问题
+     *
      * @param config http请求/响应的配置
-     * @param param  http请求
+     * @param req  http请求
      * @return 本次http请求是否符合指定config的配置。符合，则返回true；否则返回false
      */
-    private boolean isConfigMatched(HttpMockConfig config, RequestEntity<Object> param) {
+    private boolean isConfigMatched(HttpMockConfig config, RequestEntity<Object> req) {
         // 首先，uri和method要相同
         // 其次，检查表达式是否匹配
+        boolean isMatched = StringUtils.equals(config.getUri(), req.getUrl().getPath()) && config.getMethod() == req
+                .getMethod() && JexlUtils.isMatched(config.getExpression(), req);
 
-        boolean isMatched = StringUtils.equals(config.getUri(), param.getUrl().getPath()) && config.getMethod() == param
-                .getMethod() && JexlUtils.isMatched(config.getExpression(), param);
-
-        log.info("config:{}, param:{}, isMatched:{}", config, param, isMatched);
+        log.info("config:{}, param:{}, isMatched:{}", config, req, isMatched);
 
         return isMatched;
     }
