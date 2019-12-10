@@ -1,7 +1,6 @@
 package kitty.mock.http.biz.impl;
 
 import kitty.mock.common.biz.impl.MockerAsSkeleton;
-import kitty.mock.common.util.JsonUtils;
 import kitty.mock.http.bean.HttpForwardConfig;
 import kitty.mock.http.bean.HttpMockConfig;
 import kitty.mock.http.service.HttpForwardService;
@@ -62,7 +61,7 @@ class HttpMockerImpl extends MockerAsSkeleton<RequestEntity<Object>, ResponseEnt
         // 考虑把headers放进来
         log.info("Http mock toResponse. config:{}", config);
 
-        ResponseEntity<Object> result = new ResponseEntity<>(JsonUtils.fromJson(config.getResponseBody(), Object.class),
+        ResponseEntity<Object> result = new ResponseEntity<>(config.getResponseBody(),
                 ObjectUtils.defaultIfNull(HttpStatus.resolve(config.getHttpStatusCode()),
                         HttpStatus.INTERNAL_SERVER_ERROR));
         log.info("Http mock toResponse. config:{}, result:{}", config, result);

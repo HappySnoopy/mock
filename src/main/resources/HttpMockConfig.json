@@ -1,15 +1,15 @@
 [
   {
-    "uri": "/test",
+    "uri": "/testparam",
     "method": "GET",
-    "expression": "params.a=='[1]' && params.b=='[1, 2]'",
+    "expression": "param.a=='1' && param.b=='1,2'",
     "responseBody": "{\"code\":\"0000\"}",
     "httpStatusCode": 200
   },
   {
-    "uri": "/test",
+    "uri": "/testparam",
     "method": "GET",
-    "expression": "params.a=='[1]'",
+    "expression": "param.a=='1'",
     "responseBody": "{\"code\":\"1001\",\"message\":\"缺少必填参数b\"}",
     "httpStatusCode": 200
   }

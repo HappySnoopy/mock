@@ -1,6 +1,7 @@
 package kitty.mock.http.web;
 
 import kitty.mock.common.biz.Mocker;
+import kitty.mock.http.bean.RequestEntity4Mock;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
@@ -58,7 +59,7 @@ public class HttpMockController {
      * @return http响应结果
      */
     @RequestMapping
-    public ResponseEntity<Object> mock(RequestEntity<Object> input) {
+    public ResponseEntity<Object> mock(RequestEntity4Mock<Object> input) {
         // 上传、下载、responseBody等，通过扩展这个工厂方法、并生成不同的MockInput来处理
         log.info("input:{}", input);
 
@@ -70,7 +71,7 @@ public class HttpMockController {
     }
 
     @PostMapping("/test")
-    public ResponseEntity<Object> test(String token, RequestEntity<Object> input) {
+    public ResponseEntity<Object> test(String token, RequestEntity4Mock<Object> input) {
         log.info("token:{}, token in request:{}", token, input);
         return ResponseEntity.ok(input);
     }

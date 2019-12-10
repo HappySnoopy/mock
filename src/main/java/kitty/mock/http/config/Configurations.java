@@ -1,13 +1,15 @@
 package kitty.mock.http.config;
 
+import kitty.mock.http.service.impl.HttpEntity4MockProcessorImpl;
+import kitty.mock.http.service.impl.StringObjectHttpMessageConverter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.MediaType;
-import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.method.support.HandlerMethodArgumentResolver;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
+import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * http mock的一些配置项
@@ -16,7 +18,10 @@ import java.util.Arrays;
  * @date 2019 -12-09
  */
 @Configuration
-public class Configurations {
+public class Configurations implements WebMvcConfigurer {
+
+    @Resource
+    private HttpEntity4MockProcessorImpl httpEntity4MockProcessor;
 
     /**
      * Rest template rest template.
@@ -31,32 +36,12 @@ public class Configurations {
     }
 
     /**
-     * 把String当做Object来解析
+     * 增加解析器
      *
-     * @author 林俊 <junlin8@creditease.cn>
-     * @date 2019 -12-10
+     * @param resolvers the resolvers
      */
-    class StringObjectHttpMessageConverter extends StringHttpMessageConverter {
-
-        /**
-         * 默认编码格式为UTF-8；
-         * <p>
-         * 支持多种字符串
-         */
-        StringObjectHttpMessageConverter() {
-            super(StandardCharsets.UTF_8);
-            setSupportedMediaTypes(Arrays.asList(MediaType.TEXT_HTML, MediaType.TEXT_PLAIN));
-        }
-
-        /**
-         * 支持Object的处理
-         *
-         * @param clazz the clazz
-         * @return the boolean
-         */
-        @Override
-        public boolean supports(Class<?> clazz) {
-            return Object.class == clazz;
-        }
+    @Override
+    public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
+        resolvers.add(httpEntity4MockProcessor);
     }
 }

@@ -32,13 +32,15 @@ public class HttpMockConfig implements Comparable<HttpMockConfig> {
      * 表达式
      *
      * 满足此表达式时，表示将返回指定的结果
+     *
+     * 可用内置属性：param;header;body
      */
     private String expression;
 
     /**
      * 响应体
      */
-    private String responseBody;
+    private Object responseBody;
 
     /**
      * 响应header
