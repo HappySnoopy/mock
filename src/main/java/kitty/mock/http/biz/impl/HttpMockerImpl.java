@@ -7,6 +7,7 @@ import kitty.mock.http.service.HttpForwardService;
 import kitty.mock.http.service.HttpMockService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ObjectUtils;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
@@ -92,13 +93,18 @@ class HttpMockerImpl extends MockerAsSkeleton<RequestEntity<Object>, ResponseEnt
      *
      * 出现Content-Type不能解析时，请前往{@link kitty.mock.http.config.Configurations}去配置对应的解析类
      * @param config the config
-     * @param param  the param
+     * @param req  the param
      * @return 转发服务的返回结果
      */
-    private ResponseEntity<Object> toResponse(HttpForwardConfig config, RequestEntity<Object> param) {
+    private ResponseEntity<Object> toResponse(HttpForwardConfig config, RequestEntity<Object> req) {
+
+
+        String url = config.getForwardUrl() + req.getUrl().getPath() + "?" + req.getUrl().getQuery();
+        HttpMethod method = req.getMethod();
+        log.info("http forward to : {}, method:{}, request:{} ", url, method, req);
+
+
         // request在这个方法里，只用了getBody/getHeader/getType
-        return restTemplate
-                .exchange(config.getForwardUrl() + "?" + param.getUrl().getQuery(), config.getHttpMethod(), param,
-                        Object.class);
+        return restTemplate.exchange(url, method, req, Object.class);
     }
 }

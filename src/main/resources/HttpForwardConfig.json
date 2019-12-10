@@ -1,0 +1,18 @@
+[
+  {
+    "originUri": "/testparam",
+    "forwardUrl": "http://localhost:8081"
+  },
+  {
+    "originUri": "/test/forward",
+    "forwardUrl": "http://localhost:8081"
+  },
+  {
+    "originUri": "/data/sk/101190408.html",
+    "forwardUrl": "http://www.weather.com.cn"
+  },
+  {
+    "originUri": "/query",
+    "forwardUrl": "http://www.kuaidi100.com"
+  }
+]

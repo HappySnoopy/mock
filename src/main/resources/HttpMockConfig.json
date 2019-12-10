@@ -12,5 +12,33 @@
     "expression": "param.a=='1'",
     "responseBody": "{\"code\":\"1001\",\"message\":\"缺少必填参数b\"}",
     "httpStatusCode": 200
+  },
+  {
+    "uri": "/data/sk/101190408.html",
+    "method": "GET",
+    "responseBody": "{\"weatherinfo\":{\"city\":\"不知道\",\"cityid\":\"101190408\",\"temp\":\"22.8\",\"WD\":\"乱码\",\"WS\":\"这是啥\",\"SD\":\"81%\",\"AP\":\"1005.5hPa\",\"njd\":\"不清楚\",\"WSE\":\"<3\",\"time\":\"17:55\",\"sm\":\"3.2\",\"isRadar\":\"0\",\"Radar\":\"\"}}",
+    "httpStatusCode": 200
+  },
+  {
+    "uri": "/query",
+    "expression": "param.type=='yuantong' && param.postid=='11111111111'",
+    "method": "GET",
+    "responseBody": {
+      "message": "这是mock的结果",
+      "nu": "11111111111",
+      "ischeck": "1",
+      "com": "yuantong",
+      "status": "200",
+      "condition": "F00",
+      "state": "3",
+      "data": [
+        {
+          "time": "2019-11-12 20:37:05",
+          "context": "查无结果",
+          "ftime": "2019-11-12 20:37:05"
+        }
+      ]
+    },
+    "httpStatusCode": 200
   }
 ]

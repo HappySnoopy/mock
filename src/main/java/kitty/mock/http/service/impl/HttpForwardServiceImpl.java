@@ -1,12 +1,14 @@
 package kitty.mock.http.service.impl;
 
+import com.google.gson.reflect.TypeToken;
 import kitty.mock.http.bean.HttpForwardConfig;
 import kitty.mock.http.service.HttpForwardService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpMethod;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.RequestEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -17,21 +19,30 @@ import java.util.Optional;
  */
 @Service
 @Slf4j
-class HttpForwardServiceImpl implements HttpForwardService {
+class HttpForwardServiceImpl extends BaseConfigSupportImpl<HttpForwardConfig> implements HttpForwardService {
+
     /**
-     * Query config optional.
+     * 构造函数注入
+     *
+     * @param location the location
+     */
+    public HttpForwardServiceImpl(@Value("${mock.http.config.forward.location}") String location) {
+        super(new TypeToken<List<HttpForwardConfig>>() {
+        }.getType(), location);
+    }
+
+    /**
+     * 从 #configList 中遍历找出配置了对应path的配置项
      *
      * @param param the param
      * @return the optional
      */
     @Override
     public Optional<HttpForwardConfig> queryConfig(RequestEntity<Object> param) {
-        // test TODO
-        HttpForwardConfig config = new HttpForwardConfig();
-        config.setForwardUrl("http://localhost:1986/test/");
-        config.setHttpMethod(HttpMethod.POST);
-
+        Optional<HttpForwardConfig> config = configList.stream()
+                .filter(c -> c.getOriginUri().equals(param.getUrl().getPath())).findFirst();
         log.info("param:{}, config:{}", param, config);
-        return Optional.of(config);
+        return config;
     }
+
 }

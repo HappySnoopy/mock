@@ -35,7 +35,7 @@ public class HttpMockConfig implements Comparable<HttpMockConfig> {
      *
      * 可用内置属性：param;header;body
      */
-    private String expression;
+    private String expression = "true";
 
     /**
      * 响应体

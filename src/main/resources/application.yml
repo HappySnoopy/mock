@@ -6,4 +6,7 @@ server:
 mock:
   http:
     config:
-      location: "E:\\git\\mock\\src\\main\\resources\\HttpMockConfig.json"
+      mock:
+        location: "E:\\git\\mock\\src\\main\\resources\\HttpMockConfig.json"
+      forward:
+        location: "E:\\git\\mock\\src\\main\\resources\\HttpForwardConfig.json"

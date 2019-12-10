@@ -2,6 +2,7 @@ package kitty.mock.http.config;
 
 import kitty.mock.http.service.impl.HttpEntity4MockProcessorImpl;
 import kitty.mock.http.service.impl.StringObjectHttpMessageConverter;
+import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestTemplate;
@@ -9,6 +10,8 @@ import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import javax.annotation.Resource;
+import java.time.Duration;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 /**
@@ -23,6 +26,10 @@ public class Configurations implements WebMvcConfigurer {
     @Resource
     private HttpEntity4MockProcessorImpl httpEntity4MockProcessor;
 
+
+    @Resource
+    private RestTemplateBuilder restTemplateBuilder;
+
     /**
      * Rest template rest template.
      *
@@ -30,7 +37,25 @@ public class Configurations implements WebMvcConfigurer {
      */
     @Bean
     public RestTemplate restTemplate() {
-        RestTemplate restTemplate = new RestTemplate();
+        /*
+         * 这里涉及一个知识点，记录一下。
+         *
+         * 如果直接使用最基础的RestTemplate，当http接口中返回了Content-Encoding:gzip时，会报错：
+         * java.util.zip.ZipException: Not in GZIP format
+         *
+         * 这是因为服务端为了降低网络流量，采用了压缩格式来返回结果。
+         * 解决问题有几种方式，可以参见：https://www.jianshu.com/p/2ed17552d0c3
+         * 1. 自己从InputStream/GZIPInputStream中获取byte[]，然后转成String
+         * 2. 先用ResponseEntity<byte[]>来接收数据，然后再用GZIPInputStream转成String
+         * 3. 使用Apache Commons提供的辅助方法
+         * 4. 使用Apache HttpClient。主要是使用HttpComponentsClientHttpRequestFactory。
+         * 4.1 显式的为restTemplate配置一个HttpComponentsClientHttpRequestFactory
+         * 4.1 使用RestTemplateBuilder来隐式配置一个HttpComponentsClientHttpRequestFactory
+         *
+         * 所以，请合理使用工具类库
+         * */
+
+        RestTemplate restTemplate = restTemplateBuilder.setReadTimeout(Duration.of(30, ChronoUnit.SECONDS)).build();
         restTemplate.getMessageConverters().add(new StringObjectHttpMessageConverter());
         return restTemplate;
     }

@@ -1,10 +1,13 @@
 package kitty.mock.http.bean;
 
 import lombok.Data;
-import org.springframework.http.HttpMethod;
 
 /**
  * Http请求转发的配置
+ * <p>
+ * 如：#originUri = /test/forward，#forwardUrl = http://localhost:8081
+ * <p>
+ * 则：所有访问 http://当前服务/test/forward的请求，都会转发哦大 http://localhost:8081/test/forward上
  *
  * @author Jerry
  * @date 2019 -12-09
@@ -12,9 +15,17 @@ import org.springframework.http.HttpMethod;
 @Data
 public class HttpForwardConfig {
 
-    /** 转发的url */
+    /**
+     * 转发的URL
+     * <p>
+     * 注意是URL，不是URI
+     */
     private String forwardUrl;
 
-    /** 转发的方法 */
-    private HttpMethod httpMethod;
+    /**
+     * 初始URI
+     * <p>
+     * 注意是URI不是
+     */
+    private String originUri;
 }
