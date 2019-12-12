@@ -15,6 +15,8 @@ import java.util.Map;
  * <p>
  * DONE toString()方法可以手动定制一个
  *
+ * TODO 没有必要在这里保存header和param。这两个数据只在HttpMockConfig相关的地方使用，在必要时解析出来即可，没有必要一直占用着jvm内存
+ *
  * @param <T> the type parameter
  * @author Pluto
  * @date 2019 -12-10
