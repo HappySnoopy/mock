@@ -5,6 +5,7 @@ import kitty.mock.http.bean.HttpForwardConfig;
 import kitty.mock.http.bean.HttpMockConfig;
 import kitty.mock.http.service.HttpForwardService;
 import kitty.mock.http.service.HttpMockService;
+import kitty.mock.http.service.HttpRecordService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.http.HttpMethod;
@@ -33,6 +34,8 @@ class HttpMockerImpl extends MockerAsSkeleton<RequestEntity<Object>, ResponseEnt
     /** The Http forward service. */
     @Resource
     private HttpForwardService httpForwardService;
+    @Resource
+    private HttpRecordService httpRecordService;
 
     /**
      * 给Http做一个处理
@@ -106,5 +109,16 @@ class HttpMockerImpl extends MockerAsSkeleton<RequestEntity<Object>, ResponseEnt
 
         // request在这个方法里，只用了getBody/getHeader/getType
         return restTemplate.exchange(url, method, req, Object.class);
+    }
+
+    /**
+     * 记录下本次http转发操作的请求数据和返回结果
+     *
+     * @param req  请求数据
+     * @param resp 响应数据
+     */
+    @Override
+    protected void record(RequestEntity<Object> req, ResponseEntity<Object> resp) {
+        httpRecordService.record(req, resp);
     }
 }

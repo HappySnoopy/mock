@@ -52,7 +52,7 @@ public class MockerAsSkeleton<I, O> implements Mocker<I, O> {
      * @param i the
      * @param o the o
      */
-    private void record(I i, O o) {
+    protected void record(I i, O o) {
         log.debug("mock服务：记录下入参和出参。input:{}, output:{}", i, o);
 
     }
