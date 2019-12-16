@@ -82,6 +82,8 @@ public class HttpEntity4MockProcessorImpl extends HttpEntityMethodProcessor {
         // 增加两个操作：header和param处理
         entity.setHeader(parseHeader(inputMessage.getHeaders()));
         entity.setParam(parseParam(inputMessage.getServletRequest()));
+        // TODO 更详尽的ip地址处理逻辑
+        entity.setClientIp(inputMessage.getRemoteAddress().toString());
 
         log.info("解析 RequestEntity4Mock 完毕。entity:{}", entity);
         return entity;

@@ -15,7 +15,10 @@ import java.util.Map;
  * <p>
  * DONE toString()方法可以手动定制一个
  *
- * TODO 没有必要在这里保存header和param。这两个数据只在HttpMockConfig相关的地方使用，在必要时解析出来即可，没有必要一直占用着jvm内存
+ * DONE 没有必要在这里保存header和param。这两个数据只在HttpMockConfig相关的地方使用，在必要时解析出来即可，没有必要一直占用着jvm内存
+ * 想了想，还是封装到这里
+ *
+ * TODO 有可能还是要放到这个里面来处理。mockConfig 里面有ClientIp的配置，父类拿不到这个东西
  *
  * @param <T> the type parameter
  * @author Pluto
@@ -24,6 +27,9 @@ import java.util.Map;
 @Getter
 @Setter
 public class RequestEntity4Mock<T> extends RequestEntity<T> {
+
+    /** 调用方Ip地址 */
+    private String clientIp;
 
     /** 把父类的headers解析出来 */
     private Map<String, String> header;

@@ -10,3 +10,5 @@ mock:
         location: "E:\\git\\mock\\src\\main\\resources\\HttpMockConfig.json"
       forward:
         location: "E:\\git\\mock\\src\\main\\resources\\HttpForwardConfig.json"
+      record:
+        location: "E:\\git\\mock\\src\\main\\resources\\"
