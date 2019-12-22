@@ -2,6 +2,7 @@ package kitty.mock.http.config;
 
 import kitty.mock.http.service.impl.HttpEntity4MockProcessorImpl;
 import kitty.mock.http.service.impl.StringObjectHttpMessageConverter;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,8 +11,6 @@ import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import javax.annotation.Resource;
-import java.time.Duration;
-import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 /**
@@ -20,6 +19,7 @@ import java.util.List;
  * @author Jerry
  * @date 2019 -12-09
  */
+@Slf4j
 @Configuration
 public class Configurations implements WebMvcConfigurer {
 
@@ -27,16 +27,14 @@ public class Configurations implements WebMvcConfigurer {
     private HttpEntity4MockProcessorImpl httpEntity4MockProcessor;
 
 
-    @Resource
-    private RestTemplateBuilder restTemplateBuilder;
-
     /**
      * Rest template rest template.
      *
      * @return the rest template
      */
     @Bean
-    public RestTemplate restTemplate() {
+    public RestTemplate restTemplate(RestTemplateBuilder restTemplateBuilder) {
+
         /*
          * 这里涉及一个知识点，记录一下。
          *
@@ -55,8 +53,11 @@ public class Configurations implements WebMvcConfigurer {
          * 所以，请合理使用工具类库
          * */
 
-        RestTemplate restTemplate = restTemplateBuilder.setReadTimeout(Duration.of(30, ChronoUnit.SECONDS)).build();
+        RestTemplate restTemplate = restTemplateBuilder.build();
         restTemplate.getMessageConverters().add(new StringObjectHttpMessageConverter());
+
+
+        log.info("restTemplateBuilder:{}, restTemplate:{}", restTemplateBuilder, restTemplate);
         return restTemplate;
     }
 

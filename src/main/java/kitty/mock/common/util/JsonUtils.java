@@ -17,19 +17,19 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class JsonUtils {
 
+    /**
+     * 普通的GSON实例
+     */
     private static final Gson GSON = new Gson();
+    /**
+     * 专用的GSON实例
+     */
     private static final Gson GSON_RECORD = new GsonBuilder().disableHtmlEscaping().setPrettyPrinting().create();
 
-    /**
-     * 对象解析为json字符串
-     *
-     * @param object 待解析对象
-     * @return 解析完毕的json串 string
-     */
+
     public static String toJson(Object object) {
         return GSON.toJson(object);
     }
-
     /**
      * 为记录http请求而定义的转json方法
      * <p>
@@ -40,20 +40,6 @@ public class JsonUtils {
      */
     public static String toJson4Record(Object object) {
         return GSON_RECORD.toJson(object);
-    }
-
-    /**
-     * 字符串解析为对象
-     * <p>
-     * 不能处理泛型对象
-     *
-     * @param <T>    the type parameter
-     * @param json   json字符串
-     * @param tClass 转换后的类型
-     * @return 解析结果 object
-     */
-    public static <T> Object fromJson(String json, Class<T> tClass) {
-        return GSON.fromJson(json, tClass);
     }
 
     /**

@@ -7,8 +7,8 @@ mock:
   http:
     config:
       mock:
-        location: "/Users/linjun/git/mock/src/main/resources/HttpForwardConfig.json"
-      forward:
         location: "/Users/linjun/git/mock/src/main/resources/HttpMockConfig.json"
+      forward:
+        location: "/Users/linjun/git/mock/src/main/resources/HttpForwardConfig.json"
       record:
         location: "/Users/linjun/git/mock/src/main/resources/config"

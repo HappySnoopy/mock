@@ -15,6 +15,7 @@
   },
   {
     "uri": "/data/sk/101190408.html",
+    "expression": "false",
     "method": "GET",
     "responseBody": "{\"weatherinfo\":{\"city\":\"不知道\",\"cityid\":\"101190408\",\"temp\":\"22.8\",\"WD\":\"乱码\",\"WS\":\"这是啥\",\"SD\":\"81%\",\"AP\":\"1005.5hPa\",\"njd\":\"不清楚\",\"WSE\":\"<3\",\"time\":\"17:55\",\"sm\":\"3.2\",\"isRadar\":\"0\",\"Radar\":\"\"}}",
     "httpStatusCode": 200
