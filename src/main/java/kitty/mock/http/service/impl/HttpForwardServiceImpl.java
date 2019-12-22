@@ -39,6 +39,7 @@ class HttpForwardServiceImpl extends BaseConfigSupportImpl<HttpForwardConfig> im
      */
     @Override
     public Optional<HttpForwardConfig> queryConfig(RequestEntity<Object> param) {
+        log.info("http forward: queryConfig param:{}, configList:{}", param, configList);
         Optional<HttpForwardConfig> config = configList.stream()
                 .filter(c -> c.getOriginUri().equals(param.getUrl().getPath())).findFirst();
         log.info("param:{}, config:{}", param, config);

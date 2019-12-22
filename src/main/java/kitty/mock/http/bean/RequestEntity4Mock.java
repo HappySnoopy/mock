@@ -50,7 +50,7 @@ public class RequestEntity4Mock<T> extends RequestEntity<T> {
         super(body, headers, method, url, paramType);
     }
 
-    /**
+    /**RequestEntity4Mock
      * To string string.
      *
      * @return the string
