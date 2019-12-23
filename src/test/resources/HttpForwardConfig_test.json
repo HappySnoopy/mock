@@ -1,0 +1,10 @@
+[
+  {
+    "originUri": "/testparam",
+    "forwardUrl": "http://localhost:8081"
+  },
+  {
+    "originUri": "/test/forward",
+    "forwardUrl": "http://localhost:8081"
+  }
+]

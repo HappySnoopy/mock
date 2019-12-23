@@ -3,6 +3,7 @@ package kitty.mock.http.service.impl;
 import kitty.mock.common.util.JsonUtils;
 import lombok.AccessLevel;
 import lombok.Setter;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.CollectionUtils;
@@ -24,10 +25,13 @@ import java.util.stream.Stream;
  */
 abstract class BaseConfigSupportImpl<T> {
 
+    /** classpath的配置前缀 */
+    private static final String CLASSPATH = "classpath:";
+    /** The Logger. */
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     /** 解析得到的配置类 */
-    protected List<T> configList;
+    List<T> configList;
     /** 配置类的反射用类型 */
     @Setter(AccessLevel.PROTECTED)
     private Type configType;
@@ -35,6 +39,12 @@ abstract class BaseConfigSupportImpl<T> {
     @Setter(AccessLevel.PROTECTED)
     private String location;
 
+    /**
+     * Instantiates a new Base config support.
+     *
+     * @param configType the config type
+     * @param location   the location
+     */
     protected BaseConfigSupportImpl(Type configType, String location) {
         this.configType = configType;
         this.location = location;
@@ -51,17 +61,43 @@ abstract class BaseConfigSupportImpl<T> {
         // 注意顺序
         List<T> tempConfigList = new LinkedList<>();
 
-        // TODO 考虑classpath
-        // TODO 考虑直接配置到application.yml中
-        File start = new File(location);
+        // DONE 考虑classpath
+        File start = readFile(location);
 
-        parseConfig(start, tempConfigList);
+        // 如果没有读到文件，可能是没有配置。
+        if (start != null) {
+            parseConfig(start, tempConfigList);
 
-
-        if (CollectionUtils.isEmpty(tempConfigList)) {
-            throw new RuntimeException(location + " 路径下没有HttpMock的配置！");
+            // 如果有文件、但是解析不了数据，就抛异常
+            if (CollectionUtils.isEmpty(tempConfigList)) {
+                throw new RuntimeException(location + " 路径下没有HttpMock的配置！");
+            }
         }
         this.configList = tempConfigList;
+    }
+
+    /**
+     * Read file file.
+     *
+     * @param path the path
+     * @return the file
+     */
+    private File readFile(String path) {
+        // 如果在classpath下，则用classpath来获取
+        if (StringUtils.isBlank(path)) {
+            // 如果没有配置，正常处理
+            // 例如，有可能没有做mock配置，全部forward
+            logger.warn("没有配置config文件路径。");
+            return null;
+        } else if (path.startsWith(CLASSPATH)) {
+            // 从classpath下解析文件
+            String classpathFile = path.substring(path.indexOf(CLASSPATH) + CLASSPATH.length());
+            logger.debug("path:{}, classpathFile:{}", path, classpathFile);
+            return new File(BaseConfigSupportImpl.class.getClassLoader().getResource(classpathFile).getFile());
+        } else {
+            // 直接解析文件
+            return new File(location);
+        }
     }
 
     /**
@@ -71,11 +107,13 @@ abstract class BaseConfigSupportImpl<T> {
     private void parseConfig(File file, List<T> configList) {
         if (file.isDirectory() && file.listFiles() != null) {
             // 如果是文件夹，且文件夹非空，则迭代文件夹内容
-            Stream.of(file.listFiles()).filter(Objects::nonNull).forEach(f -> parseConfig(f, configList));
+            Stream.of(Objects.requireNonNull(file.listFiles())).filter(Objects::nonNull)
+                    .forEach(f -> parseConfig(f, configList));
         } else if (file.isFile()) {
             // 如果是文件，则解析文件内容
             configList.addAll(JsonUtils.fromFile(file, configType));
         }
-        // 如果不满足以上条件（如文件不存在、空文件夹），则之额吉返回不做处理
+        // 如果不满足以上条件（如文件不存在、空文件夹），则直接返回不做处理。
+        // 此时，configList会保持入参数据
     }
 }

@@ -1,0 +1,86 @@
+<RestClientRequest>
+    <option name="biscuits">
+        <list>
+            <Biscuit>
+                <option name="date" value="-1"/>
+                <option name="domain" value="www.kuaidi100.com"/>
+                <option name="name" value="WWWID"/>
+                <option name="path" value="/"/>
+                <option name="value" value="WWWBF6831931940227317F63647DAD715DD"/>
+            </Biscuit>
+            <Biscuit>
+                <option name="date" value="1576066674000"/>
+                <option name="domain" value="kuaidi100.com"/>
+                <option name="name" value="csrftoken"/>
+                <option name="path" value="/query"/>
+                <option name="value" value="J__Tf3h5UnxSmtyu9P6_H0tK-JK6yr6LqAwr4NxAFaI"/>
+            </Biscuit>
+            <Biscuit>
+                <option name="date" value="1576066674000"/>
+                <option name="domain" value="www.kuaidi100.com"/>
+                <option name="name" value="globacsrftoken"/>
+                <option name="path" value="/globalauto.do"/>
+                <option name="value" value="J__Tf3h5UnxApvAcP43LVGZfYXpSfeYtCbMNDLcX_J4"/>
+            </Biscuit>
+        </list>
+    </option>
+    <option name="httpMethod" value="GET"/>
+    <option name="urlBase" value="http://localhost:1986"/>
+    <option name="urlPath" value="/query"/>
+    <option name="headers">
+        <list>
+            <KeyValuePair>
+                <option name="key" value="Accept"/>
+                <option name="value"
+                        value="text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3"/>
+            </KeyValuePair>
+            <KeyValuePair>
+                <option name="key" value="Accept-Encoding"/>
+                <option name="value" value="gzip, deflate"/>
+            </KeyValuePair>
+            <KeyValuePair>
+                <option name="key" value="Accept-Language"/>
+                <option name="value" value="zh-CN,zh;q=0.9,en;q=0.8"/>
+            </KeyValuePair>
+            <KeyValuePair>
+                <option name="key" value="Cache-Control"/>
+                <option name="value" value="max-age=0"/>
+            </KeyValuePair>
+            <KeyValuePair>
+                <option name="key" value="Connection"/>
+                <option name="value" value="keep-alive"/>
+            </KeyValuePair>
+            <KeyValuePair>
+                <option name="key" value="Host"/>
+                <option name="value" value="www.kuaidi100.com"/>
+            </KeyValuePair>
+            <KeyValuePair>
+                <option name="key" value="Upgrade-Insecure-Requests"/>
+                <option name="value" value="1"/>
+            </KeyValuePair>
+            <KeyValuePair>
+                <option name="key" value="User-Agent"/>
+                <option name="value"
+                        value="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36"/>
+            </KeyValuePair>
+        </list>
+    </option>
+    <option name="parameters">
+        <list>
+            <KeyValuePair>
+                <option name="key" value="type"/>
+                <option name="value" value="yuantong"/>
+            </KeyValuePair>
+            <KeyValuePair>
+                <option name="key" value="postid"/>
+                <option name="value" value="8888888888888"/>
+            </KeyValuePair>
+        </list>
+    </option>
+    <option name="parametersEnabled" value="true"/>
+    <option name="haveTextToSend" value="true"/>
+    <option name="haveFileToSend" value="false"/>
+    <option name="isFileUpload" value="false"/>
+    <option name="textToSend" value="{&quot;a&quot;:1,&quot;b&quot;:[1,2]}"/>
+    <option name="filesToSend" value=""/>
+</RestClientRequest>

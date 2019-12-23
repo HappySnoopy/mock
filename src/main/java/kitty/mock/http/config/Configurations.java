@@ -26,6 +26,8 @@ public class Configurations implements WebMvcConfigurer {
     @Resource
     private HttpEntity4MockProcessorImpl httpEntity4MockProcessor;
 
+    @Resource
+    private RestTemplateBuilder restTemplateBuilder;
 
     /**
      * Rest template rest template.
@@ -33,7 +35,7 @@ public class Configurations implements WebMvcConfigurer {
      * @return the rest template
      */
     @Bean
-    public RestTemplate restTemplate(RestTemplateBuilder restTemplateBuilder) {
+    public RestTemplate restTemplate() {
 
         /*
          * 这里涉及一个知识点，记录一下。
@@ -55,7 +57,6 @@ public class Configurations implements WebMvcConfigurer {
 
         RestTemplate restTemplate = restTemplateBuilder.build();
         restTemplate.getMessageConverters().add(new StringObjectHttpMessageConverter());
-
 
         log.info("restTemplateBuilder:{}, restTemplate:{}", restTemplateBuilder, restTemplate);
         return restTemplate;

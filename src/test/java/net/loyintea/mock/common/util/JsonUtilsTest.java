@@ -27,7 +27,8 @@ public class JsonUtilsTest {
     public void fromFile_forward() {
 
         List<HttpMockConfig> httpConfigList = JsonUtils.fromFile(
-                new File("/Users/linjun/git/mock/src/main/resources/HttpForwardConfig.json"), new TypeToken<List<HttpForwardConfig>>() {
+                new File("/Users/linjun/git/mock/src/main/resources/HttpForwardConfig_test.json"),
+                new TypeToken<List<HttpForwardConfig>>() {
                 }.getType()
         );
 
