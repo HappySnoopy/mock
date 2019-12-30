@@ -1,6 +1,7 @@
 package kitty.mock.http.service.impl;
 
 import kitty.mock.common.util.JsonUtils;
+import kitty.mock.http.utils.FileUtils;
 import lombok.AccessLevel;
 import lombok.Setter;
 import org.apache.commons.lang3.StringUtils;
@@ -24,9 +25,6 @@ import java.util.stream.Stream;
  * @date 2019 -12-10
  */
 abstract class BaseConfigSupportImpl<T> {
-
-    /** classpath的配置前缀 */
-    private static final String CLASSPATH = "classpath:";
     /** The Logger. */
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -89,14 +87,9 @@ abstract class BaseConfigSupportImpl<T> {
             // 例如，有可能没有做mock配置，全部forward
             logger.warn("没有配置config文件路径。");
             return null;
-        } else if (path.startsWith(CLASSPATH)) {
-            // 从classpath下解析文件
-            String classpathFile = path.substring(path.indexOf(CLASSPATH) + CLASSPATH.length());
-            logger.debug("path:{}, classpathFile:{}", path, classpathFile);
-            return new File(BaseConfigSupportImpl.class.getClassLoader().getResource(classpathFile).getFile());
         } else {
-            // 直接解析文件
-            return new File(location);
+            // 解析文件
+            return new File(FileUtils.toAbsolutePath(location));
         }
     }
 

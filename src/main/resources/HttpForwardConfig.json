@@ -4,6 +4,10 @@
     "forwardUrl": "http://localhost:8081"
   },
   {
+    "originUri": "/yrdas-master/user/flowStatusRequest",
+    "forwardUrl": "http://localhost:8081"
+  },
+  {
     "originUri": "/test/forward",
     "forwardUrl": "http://localhost:8081"
   },

@@ -11,4 +11,4 @@ mock:
       forward:
         location: "classpath:HttpForwardConfig.json"
       record:
-        location: "classpath:/config"
+        location: "classpath:config"

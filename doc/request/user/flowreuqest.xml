@@ -1,0 +1,52 @@
+<RestClientRequest>
+    <option name="biscuits">
+        <list/>
+    </option>
+    <option name="httpMethod" value="POST"/>
+    <option name="urlBase" value="http://localhost:1986"/>
+    <option name="urlPath" value="/yrdas-master/user/flowStatusRequest"/>
+    <option name="headers">
+        <list>
+            <KeyValuePair>
+                <option name="key" value="Accept"/>
+                <option name="value" value="*/*"/>
+            </KeyValuePair>
+            <KeyValuePair>
+                <option name="key" value="Cache-Control"/>
+                <option name="value" value="no-cache"/>
+            </KeyValuePair>
+            <KeyValuePair>
+                <option name="key" value="Content-Type"/>
+                <option name="value" value="application/json;charset=utf-8"/>
+            </KeyValuePair>
+        </list>
+    </option>
+    <option name="parameters">
+        <list>
+            <KeyValuePair>
+                <option name="key" value="system"/>
+                <option name="value"
+                        value="eyJhbmRyb2lkSU1FSSI6Ijg2NjE5NzAzNTA0MDYxNCIsImFuZHJvaWRJZCI6ImY4OWU3MWQ2MTg3ODA5OGYiLCJhbmRyb2lkTWFjIjoiMzg6NmU6YTI6ZjQ6OGQ6YjUiLCJhcHBWZXJzaW9uQ29kZSI6MjUxMCwiYXBwVmVyc2lvbk5hbWUiOiI1LjkuNCIsImFwcGxpY2F0aW9uSWQiOiJjb20ueWlyZW5kYWkiLCJnb29nbGVsYXQiOiIzOS45MDk5MDk5MDk5MDk5MDYiLCJnb29nbGVsbmciOiIxMTYuNDYyODcwNDYyNjkzNTkiLCJpc0VtdWxhdG9yIjoiMCIsImxhdCI6IjM5LjkxMzIzNCIsImxuZyI6IjExNi40NzcxMyIsInBpZCI6IjMwMDUzIiwic2luZ2xlQ29kZSI6Ijg2NjE5NzAzNTA0MDYxNCIsInN5c3RlbU1vZGVsIjoidml2byBYMjBQbHVzIEEiLCJzeXN0ZW1QaG9uZSI6ImFuZHJvaWQiLCJzeXN0ZW1WZXJzaW9uIjoiOC4xLjAiLCJ0ZENoYW5uZWxJRCI6InQiLCJ0ZElEIjoiMzQ5OWY3MTBlMWU3ZTUzMDQyYmMwYzAyZjQ4NTlkYTc3IiwidWlkIjoiMTA0MjgifQ=="/>
+            </KeyValuePair>
+            <KeyValuePair>
+                <option name="key" value="json"/>
+                <option name="value" value="RS5pe8JkkRhlvmnl/DIUxB+l42k4m2PQwm7Q7FkiHCY="/>
+            </KeyValuePair>
+            <KeyValuePair>
+                <option name="key" value="token"/>
+                <option name="value"
+                        value="eutc5GH3OITCSQxBlC3iGUdvZnf2zgeBtj8LJ7ufoYK4Gu8+Gt8cbwN6i5+dU2TKXSOIPDjIz075W5HamKU8XG+JcOIlHVmukkuLpTPBqFAQ05tbm64dLyTwb5d4CuX6dfe86793d819b65da2c702f9d7c8bf75"/>
+            </KeyValuePair>
+            <KeyValuePair>
+                <option name="key" value="ucode"/>
+                <option name="value" value="AAZXMQNiAWQHaFBmV2QIZgc2UjBSYFY1CzULPV1tVTULZAJn"/>
+            </KeyValuePair>
+        </list>
+    </option>
+    <option name="parametersEnabled" value="true"/>
+    <option name="haveTextToSend" value="false"/>
+    <option name="haveFileToSend" value="false"/>
+    <option name="isFileUpload" value="false"/>
+    <option name="textToSend" value=""/>
+    <option name="filesToSend" value=""/>
+</RestClientRequest>

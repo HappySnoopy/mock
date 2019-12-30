@@ -4,7 +4,7 @@ import kitty.mock.common.util.JsonUtils;
 import kitty.mock.http.bean.HttpMockConfig;
 import kitty.mock.http.bean.RequestEntity4Mock;
 import kitty.mock.http.service.HttpRecordService;
-import lombok.Setter;
+import kitty.mock.http.utils.FileUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.RequestEntity;
@@ -26,13 +26,14 @@ import java.util.stream.Collectors;
 @Slf4j
 class HttpRecordServiceImpl implements HttpRecordService {
 
+    /** The Separator. */
     private static final char SEPARATOR = '_';
+    /** The Separator str. */
     private static final String SEPARATOR_STR = "_";
     /**
      * 记录数据的路径
      */
     @Value("${mock.http.config.record.location}")
-    @Setter
     private String location;
 
     /**
@@ -81,10 +82,8 @@ class HttpRecordServiceImpl implements HttpRecordService {
      * @return jexl表达式。表达式最终返回结果是true
      */
     private String toJexlExpression(Map<String, String> param) {
-        return param.entrySet()
-                .stream()
-                .map(e -> e.getKey() + "==" + e.getValue())
-                .collect(Collectors.joining("&"));
+        return param.entrySet().stream().map(e -> "param." + e.getKey() + "==" + "'" + e.getValue() + "'")
+                .collect(Collectors.joining("&&"));
     }
 
     /**
@@ -104,9 +103,9 @@ class HttpRecordServiceImpl implements HttpRecordService {
      * @return 最后生成的文件名。注意这里会创建路径，但并不创建配置文件
      */
     private String generateFileName(RequestEntity<Object> req) {
+        log.debug("location:{}, req:{}", location, req);
 
-        StringBuilder fileNameBuilder = new StringBuilder(1024)
-                .append(location)
+        StringBuilder fileNameBuilder = new StringBuilder(1024).append(FileUtils.toAbsolutePath(location))
                 .append(File.separatorChar)
                 // http or https
                 .append(req.getUrl().getScheme())
@@ -131,8 +130,7 @@ class HttpRecordServiceImpl implements HttpRecordService {
                 .replaceAll("/", SEPARATOR_STR))
                 .append(".json");
 
-
-        log.debug("init fileNameBuilder:{}", fileNameBuilder);
+        log.info("http recode file is: {}", fileNameBuilder);
 
         return fileNameBuilder.toString();
     }

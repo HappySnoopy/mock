@@ -101,11 +101,10 @@ class HttpMockerImpl extends MockerAsSkeleton<RequestEntity<Object>, ResponseEnt
      */
     private ResponseEntity<Object> toResponse(HttpForwardConfig config, RequestEntity<Object> req) {
 
-
-        String url = config.getForwardUrl() + req.getUrl().getPath() + "?" + req.getUrl().getQuery();
+        String url = config.getForwardUrl() + req.getUrl().getPath() + "?" + req.getUrl().getQuery()
+                .replaceAll("\\+", "%2B");
         HttpMethod method = req.getMethod();
         log.info("http forward to : {}, method:{}, request:{} ", url, method, req);
-
 
         // request在这个方法里，只用了getBody/getHeader/getType
         return restTemplate.exchange(url, method, req, Object.class);

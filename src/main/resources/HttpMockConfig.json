@@ -41,5 +41,27 @@
       ]
     },
     "httpStatusCode": 200
+  },
+  {
+    "clientIp": "/127.0.0.1:59053",
+    "uri": "/yrdas-master/user/flowStatusRequest",
+    "method": "POST",
+    "expression": "param.system=='eyJhbmRyb2lkSU1FSSI6Ijg2NjE5NzAzNTA0MDYxNCIsImFuZHJvaWRJZCI6ImY4OWU3MWQ2MTg3ODA5OGYiLCJhbmRyb2lkTWFjIjoiMzg6NmU6YTI6ZjQ6OGQ6YjUiLCJhcHBWZXJzaW9uQ29kZSI6MjUxMCwiYXBwVmVyc2lvbk5hbWUiOiI1LjkuNCIsImFwcGxpY2F0aW9uSWQiOiJjb20ueWlyZW5kYWkiLCJnb29nbGVsYXQiOiIzOS45MDk5MDk5MDk5MDk5MDYiLCJnb29nbGVsbmciOiIxMTYuNDYyODcwNDYyNjkzNTkiLCJpc0VtdWxhdG9yIjoiMCIsImxhdCI6IjM5LjkxMzIzNCIsImxuZyI6IjExNi40NzcxMyIsInBpZCI6IjMwMDUzIiwic2luZ2xlQ29kZSI6Ijg2NjE5NzAzNTA0MDYxNCIsInN5c3RlbU1vZGVsIjoidml2byBYMjBQbHVzIEEiLCJzeXN0ZW1QaG9uZSI6ImFuZHJvaWQiLCJzeXN0ZW1WZXJzaW9uIjoiOC4xLjAiLCJ0ZENoYW5uZWxJRCI6InQiLCJ0ZElEIjoiMzQ5OWY3MTBlMWU3ZTUzMDQyYmMwYzAyZjQ4NTlkYTc3IiwidWlkIjoiMTA0MjgifQ=='&&param.json=='RS5pe8JkkRhlvmnl/DIUxB+l42k4m2PQwm7Q7FkiHCY='&&param.ucode=='AAZXMQNiAWQHaFBmV2QIZgc2UjBSYFY1CzULPV1tVTULZAJn'&&param.token=='eutc5GH3OITCSQxBlC3iGUdvZnf2zgeBtj8LJ7ufoYK4Gu8+Gt8cbwN6i5+dU2TKXSOIPDjIz075W5HamKU8XG+JcOIlHVmukkuLpTPBqFAQ05tbm64dLyTwb5d4CuX6dfe86793d819b65da2c702f9d7c8bf75'",
+    "responseBody": {
+      "status": "1000",
+      "message": "系统异常，稍后再试！(1000)"
+    },
+    "headerMap": {
+      "Access-Control-Allow-Credentials": "true",
+      "Access-Control-Allow-Headers": "*",
+      "Access-Control-Allow-Methods": "POST, GET, OPTIONS, DELETE",
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Max-Age": "3600",
+      "Date": "Mon, 30 Dec 2019 11:46:08 GMT",
+      "operateId": "$03170306324246e098ab60b8acf638bc",
+      "Transfer-Encoding": "chunked"
+    },
+    "httpStatusCode": 200,
+    "sort": 0.0
   }
 ]

@@ -39,8 +39,13 @@
 
     <root level="INFO">
         <appender-ref ref="stdout"/>
-        <appender-ref ref="asyncRootAppender"/>
     </root>
+
+    <logger name="kitty.mock" additivity="false">
+        <level value="DEBUG"/>
+        <appender-ref ref="stdout"/>
+        <appender-ref ref="asyncRootAppender"/>
+    </logger>
 
 
 </configuration>
